@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  purchase_date: 
+  category: MyString
+  string,: MyString
+  description: 
+  amount: 
+  paid_by: MyString
+
+two:
+  purchase_date: 
+  category: MyString
+  string,: MyString
+  description: 
+  amount: 
+  paid_by: MyString

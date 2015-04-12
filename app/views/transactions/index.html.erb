@@ -1,0 +1,19 @@
+<h1>Transactions</h1>
+
+<table>
+	<% @transactions.each do |row| %>
+			<tr>
+				<td><%= row.purchase_date.to_date %></td>
+				<td><%= row.category %></td>
+				<td><%= row.description %></td>
+				<td><%= row.amount %></td>
+				<td><%= row.paid_by %></td>
+				<td><%= link_to "Edit", edit_transaction_path(row) %></td>
+				<td>
+				<%= link_to "Delete", row, method: :delete, data: { confirm: "Are you sure?" } %>
+				</td>
+			</tr>
+	<% end %>
+</table>
+
+<%= link_to "New Transaction", new_transaction_path %>
