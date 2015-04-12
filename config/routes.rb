@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   resources :transactions
   match '/summary', to: 'transactions#summary', via: 'get'
   # The priority is based upon order of creation: first created -> highest priority.
