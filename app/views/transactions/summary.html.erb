@@ -1,0 +1,21 @@
+<h2>Banking Summary</h2>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Person</th>
+			<th>Agreed Contribution</th>
+			<th>Paid</th>
+			<th>Owe</th>
+		</tr>
+	</thead>
+	<tbody>
+	  <% @users.each do |user| %>
+			<tr>
+				<td><%= user %></td>
+				<td></td>
+				<td><%= Transaction.total_spend_by_user(user) %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

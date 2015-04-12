@@ -37,6 +37,10 @@ class TransactionsController < ApplicationController
 		redirect_to transactions_path
 	end
 
+	def summary
+		@users = ["Bibi", "Pipi"]
+	end
+
 	private
 
 		def transaction_params
