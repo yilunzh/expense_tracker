@@ -1,5 +1,7 @@
 class Transaction < ActiveRecord::Base
 
+	validates_presence_of :purchase_date, :category, :description, :amount, :paid_by
+
 	def self.total_spend
 		total = 0
 
