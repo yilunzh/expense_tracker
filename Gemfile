@@ -32,6 +32,8 @@ gem 'autoprefixer-rails'
 
 gem 'devise'
 
+gem 'pry'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber'

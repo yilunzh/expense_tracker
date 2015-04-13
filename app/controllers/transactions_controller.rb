@@ -1,8 +1,9 @@
 class TransactionsController < ApplicationController
 	before_action :authenticate_user!
-	
+
 	def index
 		@transactions = Transaction.all
+		@user = current_user
 	end
 
 	def new
@@ -14,7 +15,8 @@ class TransactionsController < ApplicationController
 	end
 
 	def create
-		@transaction = Transaction.new(transaction_params)
+		@user = current_user
+		@transaction = @user.transactions.new(transaction_params)
 		if @transaction.save
 			redirect_to transactions_path
 		else
@@ -46,6 +48,6 @@ class TransactionsController < ApplicationController
 	private
 
 		def transaction_params
-			params.require(:transaction).permit(:purchase_date, :category, :description, :amount, :paid_by)
+			params.require(:transaction).permit(:purchase_date, :category, :description, :amount, :user_id)
 		end
 end

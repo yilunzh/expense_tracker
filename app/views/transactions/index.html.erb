@@ -17,7 +17,7 @@
 				<td><%= row.category %></td>
 				<td><%= row.description %></td>
 				<td><%= row.amount %></td>
-				<td><%= row.paid_by %></td>
+				<td><%= User.find(row.user_id).name %></td>
 				<td><%= link_to "Edit", edit_transaction_path(row) %> |
 				<%= link_to "Delete", row, method: :delete, data: { confirm: "Are you sure?" } %>
 				</td>
