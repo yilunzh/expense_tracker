@@ -6,14 +6,16 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-Transaction.create(purchase_date: Time.now, 
-									 category: "monthly visit", 
-									 description: "delta flight",
-									 amount: 500.00,
-									 paid_by: "Bibi")
+['registered', 'banned', 'admin'].each do |role|
+	Role.find_or_create_by({name: role})
+end
 
-Transaction.create(purchase_date: Time.now, 
-									 category: "monthly visit", 
-									 description: "chinatown food",
-									 amount: 20.00,
-									 paid_by: "Pipi")
+# Transaction.create(purchase_date: Time.now, 
+# 									 category: "monthly visit", 
+# 									 description: "delta flight",
+# 									 amount: 500.00)
+
+# Transaction.create(purchase_date: Time.now, 
+# 									 category: "monthly visit", 
+# 									 description: "chinatown food",
+# 									 amount: 20.00)

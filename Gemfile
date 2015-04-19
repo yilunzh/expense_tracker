@@ -34,6 +34,8 @@ gem 'devise'
 
 gem 'pry'
 
+gem 'cancancan', '~> 1.10'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'cucumber'
