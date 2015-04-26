@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150419232624) do
+ActiveRecord::Schema.define(version: 20150426214029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,19 @@ ActiveRecord::Schema.define(version: 20150419232624) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "shared_users", force: true do |t|
+    t.integer  "user_id"
+    t.string   "shared_email"
+    t.integer  "shared_user_id"
+    t.string   "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shared_users", ["shared_email"], name: "index_shared_users_on_shared_email", using: :btree
+  add_index "shared_users", ["shared_user_id"], name: "index_shared_users_on_shared_user_id", using: :btree
+  add_index "shared_users", ["user_id"], name: "index_shared_users_on_user_id", using: :btree
 
   create_table "transactions", force: true do |t|
     t.datetime "purchase_date"

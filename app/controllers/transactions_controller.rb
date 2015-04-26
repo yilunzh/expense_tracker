@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
 	# load_and_authorize_resource param_method: :transaction_params
 
 	def index
-		@transactions = Transaction.all
+		@transactions = Transaction.where( "user_id = ?", current_user[:id] )
 		@user = current_user
 	end
 
