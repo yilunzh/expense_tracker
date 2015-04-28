@@ -1,0 +1,12 @@
+<h1>Access Permission</h1>
+
+<% @shared_users.each do |shared_user| %>
+	<ul>
+		<li><%= shared_user.shared_email %> 
+				<%= link_to "Edit", edit_shared_user_path(shared_user) %>
+				<%= link_to "Delete", shared_user, method: :delete, data: {confirm: "Are you sure?"} %>
+		</li>
+	</ul>
+<% end %>
+
+<%= link_to "Add Employee", new_shared_user_path %>
