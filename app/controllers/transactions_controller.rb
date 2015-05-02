@@ -3,8 +3,17 @@ class TransactionsController < ApplicationController
 	# load_and_authorize_resource param_method: :transaction_params
 
 	def index
-		@transactions = Transaction.where( "user_id = ?", current_user[:id] )
-		@user = current_user
+		user_ids = [current_user[:id]]
+		@transactions = []
+		current_user.shared_users.each do |shared_user|
+			user_ids.append(shared_user[:shared_user_id])
+		end
+		
+		user_ids.each do |user_id|
+			@transactions.append(Transaction.where("user_id = ?", user_id))
+		end
+
+		@transactions.flatten!
 	end
 
 	def new

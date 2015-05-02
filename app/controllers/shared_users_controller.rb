@@ -7,37 +7,32 @@ class SharedUsersController < ApplicationController
 		@shared_user = SharedUser.new
 	end
 
-	def edit
-		@shared_user = SharedUser.find(params[:id])
-	end
-
 	def create
 		@shared_user = current_user.shared_users.new(shared_user_params)
 		user = User.find_by_email(@shared_user.shared_email)	
 		@shared_user.shared_user_id = user.id if user
 		@shared_user.user_id = current_user.id
 		if @shared_user.save
+			@shared_user_2 = SharedUser.create(user_id: user.id, shared_email: current_user[:email], shared_user_id: current_user[:id])
 			redirect_to shared_users_path
 		else
 			render 'new'
 		end
 	end
-
-	def update
-		@shared_user = SharedUser.find(params[:id])
-		if @shared_user.update_attributes(shared_user_params)
+	
+	def destroy
+		@shared_user1 = SharedUser.find(params[:id])
+		@shared_user2 = SharedUser.where("user_id = ? and shared_user_id = ?", @shared_user1.shared_user_id, @shared_user1.user_id)[0]
+		name = @shared_user1[:shared_email]
+		if @shared_user1 and @shared_user2
+			@shared_user1.destroy
+			@shared_user2.destroy
+			flash[:success] = "#{name} has been removed from company. You also no longer have access to #{name}'s transactions"
 			redirect_to shared_users_path
 		else
-			render 'edit'
+			flash[:alert] = "something went wrong. Sharing permission between 2 accounts not in sync"
+			render "index"
 		end
-	end
-
-	def destroy
-		@shared_user = SharedUser.find(params[:id])
-		name = @shared_user[:shared_email]
-		@shared_user.destroy
-		flash[:success] = "#{name} has been removed from company"
-		redirect_to shared_users_path
 	end
 
 	private
