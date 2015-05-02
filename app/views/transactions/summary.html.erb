@@ -7,14 +7,17 @@
 			<th>Agreed Contribution</th>
 			<th>Paid</th>
 			<th>Owe</th>
+			<th>Balance</th>
 		</tr>
 	</thead>
 	<tbody>
 	  <% @users.each do |user| %>
 			<tr>
-				<td><%= user %></td>
+				<td><%= user.name %></td>
 				<td></td>
-				<td><%= Transaction.total_spend_by_user(user) %></td>
+				<td><%= @transactions.total_spend_by_user(user.id) %></td>
+				<td></td>
+				<td></td>
 			</tr>
 		<% end %>
 	</tbody>

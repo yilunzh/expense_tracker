@@ -3,17 +3,15 @@ class TransactionsController < ApplicationController
 	# load_and_authorize_resource param_method: :transaction_params
 
 	def index
-		user_ids = [current_user[:id]]
+		user_ids = SharedUser.get_shared_user_list(current_user[:id])
 		@transactions = []
-		current_user.shared_users.each do |shared_user|
-			user_ids.append(shared_user[:shared_user_id])
-		end
-		
+
 		user_ids.each do |user_id|
 			@transactions.append(Transaction.where("user_id = ?", user_id))
 		end
 
-		@transactions.flatten!
+		@transactions.flatten!.sort_by!{|a| a[:purchase_date]}
+
 	end
 
 	def new
@@ -53,7 +51,16 @@ class TransactionsController < ApplicationController
 	end
 
 	def summary
-		@users = ["Bibi", "Pipi"]
+		@users = []
+		@user_ids = SharedUser.get_shared_user_list(current_user[:id])
+		@user_ids.each do |id|
+			@users.append(User.find(id))
+		end
+		
+		dt = DateTime.now
+		current_year = dt.year
+		most_recent_month = dt.month - 1
+		@transactions = Transaction.by_month(current_year, most_recent_month)
 	end
 
 	private
