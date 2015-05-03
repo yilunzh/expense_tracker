@@ -1,0 +1,2 @@
+module ContribConfigsHelper
+end

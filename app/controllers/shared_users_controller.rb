@@ -1,4 +1,6 @@
 class SharedUsersController < ApplicationController
+	before_action :authenticate_user!
+
 	def index
 		@shared_users = current_user.shared_users
 	end

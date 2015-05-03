@@ -8,7 +8,9 @@ class User < ActiveRecord::Base
 
   has_many :transactions, dependent: :destroy
 
-  has_many :shared_users, :dependent => :destroy
+  has_many :shared_users, dependent: :destroy
+
+  has_many :contrib_config, dependent: :destroy
 
   before_create :set_default_role
 

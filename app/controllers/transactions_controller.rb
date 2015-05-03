@@ -58,9 +58,9 @@ class TransactionsController < ApplicationController
 		end
 		
 		dt = DateTime.now
-		current_year = dt.year
-		most_recent_month = dt.month - 1
-		@transactions = Transaction.by_month(current_year, most_recent_month)
+		@current_year = dt.year
+		@most_recent_month = dt.month - 1
+		@transactions = Transaction.by_month(@current_year, @most_recent_month)
 	end
 
 	private
