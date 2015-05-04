@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
 	before_action :authenticate_user!
-	# load_and_authorize_resource param_method: :transaction_params
+	helper_method :agreed_contribution
 
 	def index
 		user_ids = SharedUser.get_shared_user_list(current_user[:id])
@@ -51,21 +51,50 @@ class TransactionsController < ApplicationController
 	end
 
 	def summary
+
 		@users = []
+		
 		@user_ids = SharedUser.get_shared_user_list(current_user[:id])
-		@user_ids.each do |id|
-			@users.append(User.find(id))
-		end
 		
 		dt = DateTime.now
 		@current_year = dt.year
 		@most_recent_month = dt.month - 1
 		@transactions = Transaction.by_month(@current_year, @most_recent_month)
+
+		@total_spend = 0
+		@transactions.each do |transaction|
+			@total_spend += transaction.amount
+		end
+
+		@total_budget = 0
+		@user_ids.each do |id|
+			@total_budget += ContribConfig.find_by_user_id(id).budgeted_contrib
+		end
+
+		@display = {}
+		@user_ids.each do |id|
+			agreed_contribution = agreed_contribution(id, @total_spend, @total_budget)
+			paid = @transactions.total_spend_by_user(id)
+
+			@display[id] = { name: User.find(id).name,
+												agreed_contribution: agreed_contribution,
+												paid: paid,
+												owe: paid - agreed_contribution,
+												balance: 0 }
+		end
 	end
 
 	private
 
 		def transaction_params
 			params.require(:transaction).permit(:purchase_date, :category, :description, :amount)
+		end
+
+
+		def agreed_contribution(user_id, total_spend, total_budget)
+			contrib_config = ContribConfig.find_by_user_id(user_id)
+			agreed_contribution = contrib_config.budgeted_contrib + (total_spend - total_budget) * contrib_config.over_spend/100
+
+			return agreed_contribution
 		end
 end

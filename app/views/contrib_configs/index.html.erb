@@ -1,0 +1,24 @@
+<h1>Contribution Configurations</h1>
+
+<table class="table table-striped">
+	<thead>
+		<tr>
+			<th>Person</th>
+			<th>Budgeted Contribution</th>
+			<th>Overspend Contribution</th>
+			<th>Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+	  <% @configs.each do |config| %>
+			<tr>
+				<td><%= User.find(config.user_id).name %></td>
+				<td><%= config.budgeted_contrib %></td>
+				<td><%= config.over_spend %></td>
+				<td><%= link_to "delete", config, method: :delete, data: {confirm: "Are you sure?" } %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+
+<%= link_to "Add configuration", new_contrib_config_path %>

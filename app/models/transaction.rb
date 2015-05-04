@@ -24,7 +24,6 @@ class Transaction < ActiveRecord::Base
 	end
 
 	def self.by_month(year, month)
-		
 		dt = DateTime.new(year, month)
 		bom = dt.beginning_of_month
 		eom = dt.end_of_month

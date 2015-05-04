@@ -13,12 +13,12 @@
 		</tr>
 	</thead>
 	<tbody>
-	  <% @users.each do |user| %>
+	  <% @user_ids.each do |id| %>
 			<tr>
-				<td><%= user.name %></td>
-				<td></td>
-				<td><%= @transactions.total_spend_by_user(user.id) %></td>
-				<td></td>
+				<td><%= @display[id][:name] %></td>
+				<td><%= @display[id][:agreed_contribution] %></td>
+				<td><%= @display[id][:paid] %></td>
+				<td><%= @display[id][:owe] %></td>
 				<td></td>
 			</tr>
 		<% end %>
